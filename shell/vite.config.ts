@@ -15,7 +15,7 @@ export default defineConfig({
         'task-editor': 'http://localhost:6062/assets/taskEditorRemoteEntry.js',
         auth: 'http://localhost:6063/assets/authRemoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', 'lucide-react'],
     }),
   ],
   build: {
