@@ -1,7 +1,19 @@
-const App = () => {
-  return (
-    <div><h1>Task list from different app</h1></div>
-  )
-}
+import { getTasks } from './api/tasks';
+import TasksTable from './components/TasksTable';
+import useInitialFetch from './hooks/useInitialFetch';
+import { TaskInterface } from './interfaces/task';
+import './index.css';
 
-export default App
+const App = () => {
+  const {
+    data: tasks,
+    isLoading,
+    isError,
+    isIdle,
+    error,
+  } = useInitialFetch<TaskInterface[]>({ initialValue: [], asyncAction: getTasks });
+
+  return <TasksTable tasks={tasks} isLoading={isLoading} isError={isError} error={error} isIdle={isIdle} />;
+};
+
+export default App;
