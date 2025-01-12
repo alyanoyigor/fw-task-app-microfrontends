@@ -3,7 +3,9 @@
 Auth          - vue
 
 Task List     - react
+
 Task Editor   - react
+
 Shell (host)  - react
 
 ## Local development
