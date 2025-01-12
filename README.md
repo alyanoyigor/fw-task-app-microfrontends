@@ -10,4 +10,8 @@ Shell (host)  - react
 
 ## Local development
 
-Run `./start.sh` to start all microfrontend servers in separate terminal windows.
+Execute `./dev.sh` to run `npm i`, `npm run dev` for all microfrontends.
+
+## Local preview
+
+Execute `./preview.sh` to run `npm i`, `npm run build` and `npm run preview` for all microfrontends.
