@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "task-list",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@originjs/vite-plugin-federation": "^1.3.8",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

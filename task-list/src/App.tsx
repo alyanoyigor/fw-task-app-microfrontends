@@ -2,7 +2,6 @@ import { getTasks } from './api/tasks';
 import TasksTable from './components/TasksTable';
 import useInitialFetch from './hooks/useInitialFetch';
 import { TaskInterface } from './interfaces/task';
-import './index.css';
 
 const App = () => {
   const {
