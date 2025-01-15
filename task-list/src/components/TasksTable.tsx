@@ -14,6 +14,7 @@ import { TaskInterface } from '@/interfaces/task';
 
 interface TasksTableProps {
   tasks: TaskInterface[] | null;
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[] | null>>;
   isLoading: boolean;
   isError: boolean;
   isIdle: boolean;
@@ -26,6 +27,7 @@ const TasksTable: FC<TasksTableProps> = ({
   isError,
   isIdle,
   error,
+  setTasks,
 }) => {
   return (
     <Table>
@@ -56,7 +58,7 @@ const TasksTable: FC<TasksTableProps> = ({
             </TableCell>
           </TableRow>
         )}
-        {isIdle && tasks && <TaskList tasks={tasks} />}
+        {isIdle && tasks && <TaskList tasks={tasks} setTasks={setTasks} />}
       </TableBody>
     </Table>
   );

@@ -33,6 +33,7 @@ const useInitialFetch = <T>({
     isError: status === 'error',
     error,
     data,
+    setData,
   };
 };
 

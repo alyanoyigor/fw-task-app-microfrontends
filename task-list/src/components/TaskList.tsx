@@ -1,13 +1,41 @@
-// import TaskMenu from '@/components/tasks/TaskMenu';
+import { useEffect } from 'react';
+
 import { TableCell, TableRow } from '@/components/ui/table';
 import { TaskInterface } from '@/interfaces/task';
-import { formatDate } from '@/lib/utils';
+import TaskMenu from './TaskMenu';
+import { format } from 'date-fns';
 
 interface TaskListProps {
   tasks: TaskInterface[];
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[] | null>>;
 }
 
-function TaskList({ tasks }: TaskListProps) {
+function TaskList({ tasks, setTasks }: TaskListProps) {
+  useEffect(() => {
+    const createTaskListener = ({ detail: data }: any) => {
+      setTasks((tasks) => (tasks ? [...tasks, data] : []));
+    };
+    const deleteTaskListener = ({ detail: id }: any) => {
+      setTasks((tasks) =>
+        tasks ? tasks.filter((task) => task.id !== id) : []
+      );
+    };
+    const updateTaskListener = ({ detail: data }: any) => {
+      setTasks((tasks) =>
+        tasks ? tasks.map((task) => (task.id === data.id ? data : task)) : []
+      );
+    };
+
+    window.addEventListener('TASK_CREATED', createTaskListener);
+    window.addEventListener('TASK_DELETED', deleteTaskListener);
+    window.addEventListener('TASK_UPDATED', updateTaskListener);
+
+    return () => {
+      window.removeEventListener('TASK_CREATED', createTaskListener);
+      window.removeEventListener('TASK_DELETED', deleteTaskListener);
+      window.removeEventListener('TASK_UPDATED', updateTaskListener);
+    };
+  }, []);
 
   if (!tasks.length) {
     return (
@@ -23,9 +51,9 @@ function TaskList({ tasks }: TaskListProps) {
       <TableCell>{task.description}</TableCell>
       <TableCell>{task.priority}</TableCell>
       <TableCell>{task.status}</TableCell>
-      <TableCell>{formatDate(task.deadline)}</TableCell>
-      <TableCell className="w-[1%] p-0 pr-4 text-right">
-        {/* <TaskMenu task={task} /> */}
+      <TableCell>{format(task.deadline, 'dd/MM/yyyy')}</TableCell>
+      <TableCell className="w-[1%] text-right">
+        <TaskMenu task={task} />
       </TableCell>
     </TableRow>
   ));

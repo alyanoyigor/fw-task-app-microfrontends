@@ -1,25 +1,12 @@
 import { z } from 'zod';
+import { format } from 'date-fns';
 
-import { TaskKeysEnum, TaskPriorityEnum, TaskSortEnum, TaskStatusEnum } from '@/interfaces/task';
-import { formatDate } from '@/lib/utils';
-
-export const TaskFormSchema = z.object({
-  [TaskKeysEnum.TITLE]: z.string().min(1, { message: 'Title is required' }),
-  [TaskKeysEnum.DESCRIPTION]: z
-    .string()
-    .min(1, { message: 'Description is required' }),
-  [TaskKeysEnum.PRIORITY]: z.enum(['low', 'medium', 'high'], {
-    required_error: 'Priority is required',
-  }),
-  [TaskKeysEnum.STATUS]: z.enum(['pending', 'in-progress', 'completed'], {
-    required_error: 'Status is required',
-  }),
-  [TaskKeysEnum.DEADLINE]: z
-    .date({
-      required_error: 'Deadline is required',
-    })
-    .transform((value) => formatDate(value)),
-});
+import {
+  TaskKeysEnum,
+  TaskPriorityEnum,
+  TaskSortEnum,
+  TaskStatusEnum,
+} from '@/interfaces/task';
 
 export const TaskFiltersSchema = z
   .object({
@@ -44,7 +31,7 @@ export const TaskFiltersSchema = z
       .refine((str) => !isNaN(Date.parse(str)), {
         message: 'Invalid date format',
       })
-      .transform((value) => formatDate(new Date(value)))
+      .transform((value) => format(new Date(value), 'yyyy-MM-dd'))
       .optional(),
     [TaskKeysEnum.SORT]: z
       .enum([
