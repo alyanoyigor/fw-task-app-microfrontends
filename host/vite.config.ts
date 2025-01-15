@@ -1,3 +1,4 @@
+import path from "path"
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
@@ -15,7 +16,7 @@ export default defineConfig({
         'task-editor': 'http://localhost:6062/assets/taskEditorRemoteEntry.js',
         auth: 'http://localhost:6063/assets/authRemoteEntry.js',
       },
-      shared: ['react', 'react-dom', 'lucide-react'],
+      shared: ['react', 'react-dom'],
     }),
   ],
   build: {
@@ -23,5 +24,10 @@ export default defineConfig({
     target: 'esnext',
     minify: false,
     cssCodeSplit: false,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 });

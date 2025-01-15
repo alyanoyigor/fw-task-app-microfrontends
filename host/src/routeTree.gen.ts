@@ -13,26 +13,26 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TasksImport } from './routes/tasks'
 import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
-const TasksLazyImport = createFileRoute('/tasks')()
 const AuthLazyImport = createFileRoute('/auth')()
 
 // Create/Update Routes
-
-const TasksLazyRoute = TasksLazyImport.update({
-  id: '/tasks',
-  path: '/tasks',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/tasks.lazy').then((d) => d.Route))
 
 const AuthLazyRoute = AuthLazyImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
+
+const TasksRoute = TasksImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -51,18 +51,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksImport
+      parentRoute: typeof rootRoute
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/tasks': {
-      id: '/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof TasksLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -72,42 +72,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/auth': typeof AuthLazyRoute
-  '/tasks': typeof TasksLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/auth': typeof AuthLazyRoute
-  '/tasks': typeof TasksLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/auth': typeof AuthLazyRoute
-  '/tasks': typeof TasksLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/tasks'
+  fullPaths: '/' | '/tasks' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/tasks'
-  id: '__root__' | '/' | '/auth' | '/tasks'
+  to: '/' | '/tasks' | '/auth'
+  id: '__root__' | '/' | '/tasks' | '/auth'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TasksRoute: typeof TasksRoute
   AuthLazyRoute: typeof AuthLazyRoute
-  TasksLazyRoute: typeof TasksLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TasksRoute: TasksRoute,
   AuthLazyRoute: AuthLazyRoute,
-  TasksLazyRoute: TasksLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -121,18 +121,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/auth",
-        "/tasks"
+        "/tasks",
+        "/auth"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/tasks": {
+      "filePath": "tasks.tsx"
+    },
     "/auth": {
       "filePath": "auth.lazy.tsx"
-    },
-    "/tasks": {
-      "filePath": "tasks.lazy.tsx"
     }
   }
 }
