@@ -1,7 +1,7 @@
-const App = () => {
-  return (
-    <div><h1>Task Editor from different app</h1></div>
-  )
-}
+import TasksHeader from './components/TasksHeader';
 
-export default App
+const App = ({ supabase }: { supabase?: any }) => {
+  return <TasksHeader supabase={supabase!} />;
+};
+
+export default App;
