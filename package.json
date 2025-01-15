@@ -8,7 +8,10 @@
     "start": "pnpm run build && pnpm run serve",
     "build:remotes": "pnpm --parallel --filter \"./remote\" build",
     "serve:remotes": "pnpm --parallel --filter \"./remote\" serve",
-    "dev:hosts": "pnpm --filter \"./host\" dev",
+    "dev:host": "pnpm --filter \"./host\" dev",
+    "dev:task-list": "pnpm --filter \"./task-list\" dev",
+    "dev:task-editor": "pnpm --filter \"./task-editor\" dev",
+    "dev:auth": "pnpm --filter \"./auth\" dev",
     "stop": "kill-port --port 6060,6061,6062,6063"
   },
   "devDependencies": {
