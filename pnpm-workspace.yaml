@@ -1,0 +1,5 @@
+packages:
+  - "host"
+  - "task-list"
+  - "task-editor"
+  - "auth"

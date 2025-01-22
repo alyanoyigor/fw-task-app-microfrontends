@@ -1,13 +1,6 @@
-## Microfrontends
+## Running
+Install pnpm as per instructions provided here
 
-Auth          - vue
+Run `pnpm install`, then `pnpm run build` and `pnpm run serve`.
 
-Task List     - react
-
-Task Editor   - react
-
-Shell (host)  - react
-
-## Local development
-
-Run `./start.sh` to start all microfrontend servers in separate terminal windows.
+CTRL + C can only stop the host server. You can run pnpm stop to stop all services.
